@@ -1,6 +1,6 @@
 const Poll = require('../models/poll.js');
 
-exports.create = (req,res) => {
+exports.createPoll = (req,res) => {
     // Validate request
     // if(!req.body.poll_description) {
     //     return res.status(400).send({
@@ -19,7 +19,7 @@ exports.create = (req,res) => {
     // Save Note in the database
     poll.save()
     .then(data => {
-        res.send(data);
+        res.send({poll_id:data.poll_id});
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while creating the Poll."

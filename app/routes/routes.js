@@ -10,7 +10,7 @@ module.exports = (app) => {
 
     app.get('/poll', pollController.findAll);
 
-    app.post('/poll', pollController.create);
+    app.post('/poll', pollController.createPoll);
 
     app.get('/poll/:pollId', pollController.findPoll);
 
