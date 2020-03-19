@@ -1,4 +1,4 @@
-const Poll = require('../models/polls.js');
+const Poll = require('../models/poll.js');
 
 exports.create = (req,res) => {
     // Validate request
@@ -56,6 +56,26 @@ exports.findPoll = (req,res) => {
     }).catch(err => {
         return res.status(500).send({
             message: err.message || "Error retrieving poll with id " + req.params.pollId
+        });
+    });
+};
+
+exports.votePoll = (req,res) => {
+    Poll.findOne({poll_id: req.params.pollId},)
+    .then(poll => {
+        if (!poll) {
+            return res.status(404).send({
+                message: "Not found"
+            });
+        }
+        console.log(poll);
+        let opt = poll.options.find(opt => opt.option_id === req.body.option_id);
+        opt.qty = opt.qty + 1;
+        poll.save();
+        res.send(poll);
+    }).catch(err => {
+        return res.status(500).send({
+            message: err.message || "Error processing vote"
         });
     });
 };

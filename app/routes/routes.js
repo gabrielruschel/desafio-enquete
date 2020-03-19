@@ -1,4 +1,6 @@
 module.exports = (app) => {
+
+    // Get controller functions
     const pollController = require('../controllers/poll.js');
 
     // define a simple route
@@ -6,9 +8,11 @@ module.exports = (app) => {
         res.json({"message": "Desafio Enquete API"});
     });
 
-    // app.get('/polls', pollController.findAll);
+    app.get('/poll', pollController.findAll);
 
-    app.post('/polls', pollController.create);
+    app.post('/poll', pollController.create);
 
-    app.get('/polls/:pollId', pollController.findPoll);
+    app.get('/poll/:pollId', pollController.findPoll);
+
+    app.post('/poll/:pollId/vote', pollController.votePoll);
 }
