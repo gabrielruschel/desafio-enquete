@@ -39,14 +39,21 @@ exports.findAll = (req,res) => {
 };
 
 exports.findPoll = (req,res) => {
-    Poll.findOne({poll_id: req.params.pollId},{'_id': 0, '__v':0, 'options._id':0, 'options.qty': 0})
+    Poll.findOne({poll_id: req.params.pollId},{'__v':0, 'options._id':0, 'options.qty': 0})
     .then(poll => {
         if (!poll) {
             return res.status(404).send({
                 message: "Poll not found with id " + req.params.pollId
             });
         }
-        res.send(poll)
+        poll.views = poll.views + 1;
+        poll.save();
+        let result = {
+            poll_id: poll.poll_id,
+            poll_description: poll.poll_description,
+            options: poll.options,
+        }
+        res.send(result)
     }).catch(err => {
         return res.status(500).send({
             message: err.message || "Error retrieving poll with id " + req.params.pollId
@@ -83,7 +90,7 @@ exports.pollStats = (req,res) => {
             });
         }
         let result = {
-            views: 33,
+            views: poll.views,
             votes: poll.options
         }
         res.send(result);
