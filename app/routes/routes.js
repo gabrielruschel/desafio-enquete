@@ -1,5 +1,5 @@
 module.exports = (app) => {
-    const pollController = require('../controllers/polls.js');
+    const pollController = require('../controllers/poll.js');
 
     // define a simple route
     app.get('/', (req, res) => {

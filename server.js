@@ -14,7 +14,7 @@ const app = express();
 
 app.use(bodyParser.json())
 
-require('./app/routes/poll.routes.js')(app);
+require('./app/routes/routes.js')(app);
 
 // listen for requests
 app.listen(port,hostname, () => {
