@@ -7,8 +7,6 @@ exports.create = (req,res) => {
     //         message: "Poll content can not be empty"
     //     });
     // }
-    console.log("req.body:");
-    console.log(req.body);
 
     const poll = new Poll({
         poll_description: req.body.poll_description
@@ -17,9 +15,6 @@ exports.create = (req,res) => {
     req.body.options.forEach((item, i) => {
         poll.options.push({"option_id":i+1, "option_description": item});
     });
-
-    console.log("poll object");
-    console.log(poll);
 
     // Save Note in the database
     poll.save()
@@ -44,7 +39,6 @@ exports.findAll = (req,res) => {
 };
 
 exports.findPoll = (req,res) => {
-    console.log("Req param pollId " + req.params.pollId);
     Poll.findOne({poll_id: req.params.pollId},{'_id': 0, '__v':0, 'options._id':0, 'options.qty': 0})
     .then(poll => {
         if (!poll) {
@@ -76,6 +70,26 @@ exports.votePoll = (req,res) => {
     }).catch(err => {
         return res.status(500).send({
             message: err.message || "Error processing vote"
+        });
+    });
+};
+
+exports.pollStats = (req,res) => {
+    Poll.findOne({poll_id: req.params.pollId},{'_id': 0, '__v':0, 'options._id':0, 'options.option_description':0})
+    .then(poll => {
+        if (!poll) {
+            return res.status(404).send({
+                message: "Poll not found"
+            });
+        }
+        let result = {
+            views: 33,
+            votes: poll.options
+        }
+        res.send(result);
+    }).catch(err => {
+        return res.status(500).send({
+            message: err.message || "Error retrieving poll stats with id " + req.params.pollId
         });
     });
 };

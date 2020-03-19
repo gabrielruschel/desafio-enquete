@@ -15,4 +15,6 @@ module.exports = (app) => {
     app.get('/poll/:pollId', pollController.findPoll);
 
     app.post('/poll/:pollId/vote', pollController.votePoll);
+
+    app.get('/poll/:pollId/stats', pollController.pollStats);
 }
