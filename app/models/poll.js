@@ -15,7 +15,7 @@ const PollSchema = mongoose.Schema({
     views: {type: Number, default: 0}
 });
 
-// auto-increment poll_id field
+// Auto-increment poll_id field
 PollSchema.plugin(autoIncrement.plugin,{model: 'Poll', field: 'poll_id', startAt: 1});
 
 module.exports = mongoose.model('Poll', PollSchema);
