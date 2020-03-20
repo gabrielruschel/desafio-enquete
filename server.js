@@ -4,7 +4,7 @@ const port = 8000;
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const databaseConfig = require('./config/database.js');
+const config = require('config');
 const mongoose = require('mongoose');
 
 // Carrega o modulo HTTP do Node
@@ -24,7 +24,7 @@ app.listen(port,hostname, () => {
 mongoose.Promise = global.Promise;
 
 //Connecting to the database
-mongoose.connect(databaseConfig.url, {
+mongoose.connect(config.DBHost, {
     useNewUrlParser: true
 }).then(() => {
     console.log("Successfully connected to the database");
@@ -32,6 +32,8 @@ mongoose.connect(databaseConfig.url, {
     console.log("Could not connect to the database. Err ... ",err);
     process.exit();
 });
+
+module.exports = app; // for testing
 
 // http.createServer((req,res) => {
 //     if (req.url == '/' && req.method == 'GET') {
