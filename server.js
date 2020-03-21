@@ -1,5 +1,5 @@
-const hostname = '127.0.0.1';
-const port = 8000;
+// const hostname = '127.0.0.1';
+// const port = 8000;
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -16,9 +16,11 @@ app.use(bodyParser.json())
 
 require('./app/routes/routes.js')(app);
 
+console.log(config);
+
 // listen for requests
-app.listen(port,hostname, () => {
-    console.log("Server is listening on port 8000");
+app.listen(config.Port,config.ServerHost, () => {
+    console.log(`Server is listening on port ${config.Port}`);
 });
 
 mongoose.Promise = global.Promise;
@@ -34,15 +36,3 @@ mongoose.connect(config.DBHost, {
 });
 
 module.exports = app; // for testing
-
-// http.createServer((req,res) => {
-//     if (req.url == '/' && req.method == 'GET') {
-//         res.writeHead(200, {'Content-Type': 'application/json'});
-//         var json = {"message": "Olá mundo!"}
-//         res.write(JSON.stringify(json));
-//         res.end();
-//     }
-// })
-// .listen(port,hostname, () => {
-//     console.log("Servidor executando em http://127.0.0.1:8000/");
-// })
