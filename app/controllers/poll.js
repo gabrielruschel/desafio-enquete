@@ -89,6 +89,12 @@ exports.votePoll = (req,res) => {
         // Get the option of the poll with matching id
         let opt = poll.options.find(opt => opt.option_id === req.body.option_id);
 
+        if (!opt) {
+            return res.status(404).send({
+                message: "Option not found"
+            });
+        }
+
         // Update the number of votes
         opt.qty = opt.qty + 1;
         poll.save();
