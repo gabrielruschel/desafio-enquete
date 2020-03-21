@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 
 var connection = mongoose.connection;
+
+// Initialize plugin for creating an auto-increment id field
 autoIncrement.initialize(connection);
 
 

@@ -15,13 +15,14 @@ const server = require('../server');
 chai.use(chaiHttp);
 
 describe('API is running', () => {
-    it('Should respond its running', (done) => {
+    it('Should respond Enquete API', (done) => {
         chai.request(server)
             .get('/')
             .end((err,res) => {
                 res.should.have.status(200);
                 res.should.be.json;
                 res.body.should.have.property('message');
+                res.body.message.should.be.eql("Enquete API");
                 done();
             })
     });
